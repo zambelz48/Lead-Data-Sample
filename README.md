@@ -3,6 +3,8 @@
 ## Overview
 This project enhances SaaSquatch Leads by adding a **Lead Quality Indicator** feature that helps users maximize their Monthly Lead quota by identifying which leads are worth enriching before spending their allocation.
 
+![Lead Quality Indicator Dashboard](screenshot.png)
+
 ## Business Value
 - **Save Monthly Lead Quota**: Skip low-quality leads to preserve subscription value
 - **Increase ROI**: Focus enrichment budget on high-converting prospects  
@@ -33,7 +35,7 @@ This project enhances SaaSquatch Leads by adding a **Lead Quality Indicator** fe
 ### Project Structure
 ```
 src/
-├── components/     # React components
+├── components/     # React components with inline CSS
 ├── data/           # Mock lead data and utilities
 └── utils/          # Scoring algorithm
 ```
