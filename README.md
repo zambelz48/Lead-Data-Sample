@@ -82,3 +82,10 @@ Located in `src/utils/scoring.ts`, the algorithm is designed to be:
 - `LeadTable`: Main table component with sorting and interactivity
 - `App`: Layout and summary statistics
 - Type-safe interfaces ensure data consistency
+
+## Development Tools
+
+This project was developed using **OpenCode** as an AI pair programming tool, leveraging:
+- **Google Gemini 2.5 Pro** for business research and analysis
+- **Claude Sonnet 4** for coding tasks and implementation
+- **Neovim** as the primary code editor
