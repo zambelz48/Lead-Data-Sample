@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import type { Lead } from '../data/leads';
-import { getQualityIndicator } from '../data/leads';
+import type { Lead } from '../types/lead.types';
+import { getQualityIndicator } from '../utils/quality';
 
 interface LeadTableProps {
   leads: Lead[];

@@ -1,10 +1,10 @@
 import LeadTable from './components/LeadTable';
 import { mockLeads } from './data/leads';
+import { useLeadScoring, useLeadStats } from './hooks/useLeadScoring';
 
 function App() {
-  const highQualityLeads = mockLeads.filter(l => l.leadQuality === 'high').length;
-  const mediumQualityLeads = mockLeads.filter(l => l.leadQuality === 'medium').length;
-  const lowQualityLeads = mockLeads.filter(l => l.leadQuality === 'low').length;
+  const processedLeads = useLeadScoring(mockLeads);
+  const stats = useLeadStats(processedLeads);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#1e1f26', color: '#ffffff' }}>
@@ -32,7 +32,7 @@ function App() {
           }}>
             <div style={{ color: '#9ca3af', fontSize: '14px', fontWeight: '500' }}>Total Companies</div>
             <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#ffffff', marginTop: '4px' }}>
-              {mockLeads.length}
+              {stats.total}
             </div>
           </div>
 
@@ -59,10 +59,10 @@ function App() {
               High Quality
             </div>
             <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#10b981', marginTop: '4px' }}>
-              {highQualityLeads}
+              {stats.high}
             </div>
             <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
-              {Math.round((highQualityLeads / mockLeads.length) * 100)}% of total
+              {stats.highPercentage}% of total
             </div>
           </div>
 
@@ -89,10 +89,10 @@ function App() {
               Medium Quality
             </div>
             <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#f59e0b', marginTop: '4px' }}>
-              {mediumQualityLeads}
+              {stats.medium}
             </div>
             <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
-              {Math.round((mediumQualityLeads / mockLeads.length) * 100)}% of total
+              {stats.mediumPercentage}% of total
             </div>
           </div>
 
@@ -119,10 +119,10 @@ function App() {
               Low Quality
             </div>
             <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#ef4444', marginTop: '4px' }}>
-              {lowQualityLeads}
+              {stats.low}
             </div>
             <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
-              {Math.round((lowQualityLeads / mockLeads.length) * 100)}% of total
+              {stats.lowPercentage}% of total
             </div>
           </div>
         </div>
@@ -140,14 +140,14 @@ function App() {
                 💡 Smart Lead Prioritization Impact
               </h3>
               <p style={{ color: '#9ca3af' }}>
-                Focus on <span style={{ color: '#10b981', fontWeight: '500' }}>{highQualityLeads} high-quality leads</span> and
-                skip <span style={{ color: '#ef4444', fontWeight: '500' }}> {lowQualityLeads} low-quality ones</span> to
-                save <span style={{ color: '#3b82f6', fontWeight: '500' }}>{Math.round((lowQualityLeads / mockLeads.length) * 100)}% of your Monthly Leads quota</span>
+                Focus on <span style={{ color: '#10b981', fontWeight: '500' }}>{stats.high} high-quality leads</span> and
+                skip <span style={{ color: '#ef4444', fontWeight: '500' }}> {stats.low} low-quality ones</span> to
+                save <span style={{ color: '#3b82f6', fontWeight: '500' }}>{stats.lowPercentage}% of your Monthly Leads quota</span>
               </p>
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#10b981' }}>
-                ${Math.round((lowQualityLeads / mockLeads.length) * 19 * 12)}
+                ${stats.potentialSavings}
               </div>
               <div style={{ fontSize: '12px', color: '#9ca3af' }}>
                 Annual savings (Bronze plan)
@@ -156,7 +156,7 @@ function App() {
           </div>
         </div>
 
-        <LeadTable leads={mockLeads} />
+        <LeadTable leads={processedLeads} />
 
         <div style={{
           marginTop: '24px',
@@ -169,7 +169,7 @@ function App() {
           paddingTop: '16px'
         }}>
           <div>
-            Showing {mockLeads.length} companies with quality scoring
+            Showing {stats.total} companies with quality scoring
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -179,7 +179,7 @@ function App() {
                 borderRadius: '50%',
                 backgroundColor: '#10b981'
               }}></div>
-              <span>Recommend enriching ({highQualityLeads})</span>
+              <span>Recommend enriching ({stats.high})</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{
@@ -188,7 +188,7 @@ function App() {
                 borderRadius: '50%',
                 backgroundColor: '#f59e0b'
               }}></div>
-              <span>Review carefully ({mediumQualityLeads})</span>
+              <span>Review carefully ({stats.medium})</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{
@@ -197,7 +197,7 @@ function App() {
                 borderRadius: '50%',
                 backgroundColor: '#ef4444'
               }}></div>
-              <span>Skip to save quota ({lowQualityLeads})</span>
+              <span>Skip to save quota ({stats.low})</span>
             </div>
           </div>
         </div>

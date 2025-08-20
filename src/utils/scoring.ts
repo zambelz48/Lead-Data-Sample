@@ -1,6 +1,6 @@
-import type { Lead } from '../data/leads';
+import type { Lead, RawLead } from '../types/lead.types';
 
-export const calculateLeadQuality = (lead: Omit<Lead, 'leadQuality' | 'qualityScore'>): { quality: Lead['leadQuality'], score: number } => {
+export const calculateLeadQuality = (lead: RawLead): { quality: Lead['leadQuality'], score: number } => {
   let score = 0;
 
   // Industry scoring (40% weight)
